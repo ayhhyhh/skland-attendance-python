@@ -1,7 +1,6 @@
 import json
 import sys
 import time
-
 import requests
 
 # 声明常量
@@ -72,6 +71,19 @@ for cookie_line in cookie_lines:
 
     # 休眠指定时间后，继续下个账户
     time.sleep(SLEEP_TIME)
+
+
+DingTalkToken = sys.argv[3]
+
+DingTalkJSON = {
+    "msgtype": 'text',
+    "text": {
+        "content": f"森空岛\n{sign_response_json}",
+    },
+}
+
+url = "https://oapi.dingtalk.com:443/robot/send?access_token={DingTalkToken}"
+DingTalkResponse = requests.post(url=url, json=DingTalkJSON)
 
 
 class AbnormalChekinException(Exception):
