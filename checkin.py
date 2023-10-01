@@ -25,16 +25,21 @@ for cookie_line in cookie_lines:
     uid = cookie_line
     signing_cookie = sys.argv[2].strip()
     headers = {
+        "cred": signing_cookie,
         "user-agent": "Skland/1.0.1 (com.hypergryph.skland; build:100001014; Android 25; ) Okhttp/4.11.0",
-        "cred": signing_cookie
+        "Content-Type": "application/json; charset=utf-8",
+        "Accept-Encoding": "gzip",
+        "Connection": "close",
+        'platform': '1',
     }
+
     data = {
-        "uid": str(uid),
-        "gameId": 1
+        "uid": uid,
+        "gameId": 1,
     }
 
     # 签到请求
-    sign_response = requests.post(headers=headers, url=SIGN_URL, data=data)
+    sign_response = requests.post(headers=headers, url=SIGN_URL, json=data)
 
     # 检验返回是否为json格式
     try:
@@ -55,12 +60,12 @@ for cookie_line in cookie_lines:
         print("签到成功")
         awards = sign_response_json.get("data").get("awards")
         for award in awards:
-            print("签到获得的奖励ID为：" + award.get("resource").get("id"))
+            print("签到获得的奖励ID为: " + award.get("resource").get("id"))
             print("此次签到获得了" + str(award.get("count")) + "单位的" + award.get("resource").get("name") + "(" + award.get(
                 "resource").get("type") + ")")
             print("奖励类型为：" + award.get("type"))
     else:
-        if sign_response_json["message"]!="请勿重复签到！":
+        if sign_response_json["message"] != "请勿重复签到！":
             FAIL_SIGN = True
         print(sign_response_json)
         print("签到失败，请检查以上信息...")
@@ -68,8 +73,10 @@ for cookie_line in cookie_lines:
     # 休眠指定时间后，继续下个账户
     time.sleep(SLEEP_TIME)
 
+
 class AbnormalChekinException(Exception):
     pass
+
 
 if FAIL_SIGN:
     raise AbnormalChekinException("存在签到失败的账号，请检查信息")
