@@ -22,5 +22,6 @@ jobs:
       env:
         UID: ${{ secrets.UID }}
         CRED: ${{ secrets.CRED }}
+        DINGTALKTOKEN: ${{ secrets.DINGTALKTOKEN }}
       run: |
-        python checkin.py ${UID} ${CRED}
+        python checkin.py ${UID} ${CRED} ${DINGTALKTOKEN}
