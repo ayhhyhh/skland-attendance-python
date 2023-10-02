@@ -82,7 +82,7 @@ DingTalkJSON = {
     },
 }
 
-url = "https://oapi.dingtalk.com:443/robot/send?access_token={DingTalkToken}"
+url = "https://oapi.dingtalk.com/robot/send?access_token={DingTalkToken}"
 DingTalkResponse = requests.post(url=url, json=DingTalkJSON)
 
 
