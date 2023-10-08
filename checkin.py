@@ -2,7 +2,6 @@ import json
 import sys
 import time
 import requests
-import random
 import os
 # 声明常量
 # 签到url post请求
@@ -62,9 +61,14 @@ if code == SUCCESS_CODE:
         s += (f"奖励类型为: {award.get('type')}")
     print(s)
 else:
-    if sign_response_json["message"] != "请勿重复签到！":
+    if sign_response_json["message"] == "请勿重复签到！":
+        s = "重复签到"
+    elif sign_response_json["message"] == "用户未登录":
         FAIL_SIGN = True
-    s = str(sign_response_json)
+        s = "CRED 已过期, 请更新 CRED secret."
+    else:
+        FAIL_SIGN = True
+        s = str(sign_response_json)
     print(s)
     print("签到失败，请检查以上信息...")
 
