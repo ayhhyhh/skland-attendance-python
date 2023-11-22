@@ -20,7 +20,7 @@ jobs:
     - name: Run Checkin
       env:
         UID: ${{ secrets.UID }}
-        CRED: ${{ secrets.CRED }}
+        TOKEN: ${{ secrets.TOKEN }}
         DINGTALKTOKEN: ${{ secrets.DINGTALKTOKEN }}
       run: |
-        python checkin.py ${UID} ${CRED} ${DINGTALKTOKEN}
+        python checkin.py ${UID} ${TOKEN} ${DINGTALKTOKEN}
