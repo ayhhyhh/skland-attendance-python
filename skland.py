@@ -102,7 +102,7 @@ class sklandAccount:
         resp = response.json()
         if response.status_code != 200:
             raise Exception(f"签到失败: {resp}")
-        if resp.get("status") != 0:
+        if resp.get("code") != 0:
             raise Exception(f"签到失败: {resp}")
 
         print("签到成功")
