@@ -102,16 +102,18 @@ class sklandAccount:
         resp = response.json()
         if response.status_code != 200:
             raise Exception(f"签到失败: {resp}")
-        if resp.get("code") != 0:
+        if resp.get("code") == 0:
+            print("签到成功")
+            awards = resp.get("data").get("awards")
+            s = ""
+            for award in awards:
+                s += f"签到获得的奖励ID为: {award.get('resource').get('id')} \n"
+                s += f"此次签到获得了{award.get('count')}单位的{award.get('resource').get('name')} ({award.get('resource').get('type')})\n"
+                s += f"奖励类型为: {award.get('type')}"
+            print(s)
+        elif resp.get("message") == "请勿重复签到！":
+            s = "重复签到"
+        else:
             raise Exception(f"签到失败: {resp}")
-
-        print("签到成功")
-        awards = resp.get("data").get("awards")
-        s = ""
-        for award in awards:
-            s += f"签到获得的奖励ID为: {award.get('resource').get('id')} \n"
-            s += f"此次签到获得了{award.get('count')}单位的{award.get('resource').get('name')} ({award.get('resource').get('type')})\n"
-            s += f"奖励类型为: {award.get('type')}"
-        print(s)
-
+        
         return s
