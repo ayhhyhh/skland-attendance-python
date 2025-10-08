@@ -1,4 +1,4 @@
-name: Github Action with a cronjob trigger
+name: keepalive
 on:
   schedule:
     - cron: "0 0 * * *"
@@ -6,8 +6,8 @@ on:
 permissions:
   actions: write
 jobs:
-  cronjob-based-github-action:
-    name: Cronjob based github action
+  keepalive:
+    name: keepalive workflow
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
